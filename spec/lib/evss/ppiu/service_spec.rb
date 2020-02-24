@@ -9,6 +9,14 @@ describe EVSS::PPIU::Service do
 
   describe '#get_payment_information' do
     let(:pay_info) { subject.get_payment_information.responses.first }
+    let(:request_payload) do
+      {
+        'accountType' => 'Checking',
+        'financialInstitutionName' => 'Fake Bank Name',
+        'accountNumber' => '1234',
+        'financialInstitutionRoutingNumber' => '021000021'
+      }
+    end
 
     context 'with a valid evss response' do
       it 'returns a payment information response object', :aggregate_failures do
