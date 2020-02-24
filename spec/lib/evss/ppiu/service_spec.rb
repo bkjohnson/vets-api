@@ -12,6 +12,10 @@ describe EVSS::PPIU::Service do
 
     context 'with a valid evss response' do
       it 'returns a payment information response object', :aggregate_failures do
+        VCR.config do |c|
+          c.allow_http_connections_when_no_cassette = true
+        end
+        binding.pry; fail
         VCR.use_cassette('evss/ppiu/payment_information') do
           response = subject.get_payment_information
           expect(response).to be_ok
