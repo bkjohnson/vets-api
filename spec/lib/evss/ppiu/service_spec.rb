@@ -5,7 +5,7 @@ require 'rails_helper'
 describe EVSS::PPIU::Service do
   subject { described_class.new(user) }
 
-  let(:user) { build(:evss_user) }
+  let(:user) { build(:evss_user_incompetant) }
 
   describe '#get_payment_information' do
     let(:pay_info) { subject.get_payment_information.responses.first }
