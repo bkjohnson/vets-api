@@ -143,6 +143,25 @@ FactoryBot.define do
       end
     end
 
+    factory :evss_user_incompetant, traits: [:loa3] do
+      first_name { 'HERBERT' }
+      last_name { 'GEORGE' }
+      last_signed_in { Time.zone.parse('2017-12-07T00:55:09Z') }
+      ssn { '796156570' }
+
+      after(:build) do
+        stub_mvi(
+          build(
+            :mvi_profile,
+            edipi: '1009114439',
+            birls_id: '796156570',
+            participant_id: '600048563',
+            birth_date: '1961-12-28'
+          )
+        )
+      end
+    end
+
     factory :evss_user, traits: [:loa3] do
       first_name { 'WESLEY' }
       last_name { 'FORD' }
