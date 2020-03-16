@@ -9,6 +9,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+          name: Build Docker images
+          command: make ci-build
+      # - ruby/bundle-install
