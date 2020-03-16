@@ -6,6 +6,7 @@ jobs:
       - image: circleci/ruby:2.6.3-stretch-node
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Build Docker images
           command: make ci-build
