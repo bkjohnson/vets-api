@@ -12,9 +12,10 @@
       docker:
         - image: circleci/ruby:2.6.5-stretch
           environment:
-            BUNDLE_JOBS: 3
+            BUNDLE_JOBS: 2
             BUNDLE_RETRY: 3
             BUNDLE_PATH: vendor/bundle
+            DATABASE_URL: "postgis://root@localhost/vets-api-test"
             PGHOST: 127.0.0.1
             PGUSER: vsp
             PGPASSWORD: sekrit
@@ -22,6 +23,7 @@
           environment:
             POSTGRES_USER: vsp
             POSTGRES_PASSWORD: sekrit
+            POSTGRES_DB: vets-api-test
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout
@@ -32,13 +34,11 @@
             command: bundle exec rake db:create db:migrate
             environment:
               RAILS_ENV: test
-              DATABASE_URL: postgis://vsp:sekrit/vets-api-test
         - run:
             name: run tests
             command: bundle exec rake test
             environment:
               RAILS_ENV: test
-              DATABASE_URL: postgis://vsp:sekrit/vets-api-test
         - ruby/save-cache
 
   workflows:
