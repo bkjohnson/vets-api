@@ -7,8 +7,8 @@
     test:
       docker:
         - image: circleci/ruby:2.6.5-stretch
-        - image: postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
-        - image: redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
+        - image: circleci/postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
+        - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout
         - ruby/load-cache
