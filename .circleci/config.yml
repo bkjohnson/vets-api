@@ -7,6 +7,8 @@
     test:
       docker:
         - image: circleci/ruby:2.6.5-stretch
+          environment:
+            PGHOST: 127.0.0.1
         - image: circleci/postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
