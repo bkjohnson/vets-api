@@ -25,13 +25,13 @@
         - checkout
         - ruby/load-cache
         - ruby/install-deps
+        - ruby/save-cache
         - run:
             name: setup database
             command: bundle exec rake db:create db:schema:load
         - run:
             name: run tests
             command: bundle exec rake ci
-        - ruby/save-cache
 
   workflows:
     workflow:
