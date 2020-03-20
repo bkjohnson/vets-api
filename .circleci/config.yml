@@ -5,28 +5,32 @@
 
   jobs:
     test:
+      working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.5-stretch
           environment:
             BUNDLE_JOBS: 2
             BUNDLE_RETRY: 3
             BUNDLE_PATH: vendor/bundle
+            PGHOST: localhost
+            PGUSER: vets-api
+            RAILS_ENV: test
         - image: circleci/postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
+          environment:
+            POSTGRES_USER: vets-api
+            POSTGRES_DB: vets-api_test
+            POSTGRES_PASSWORD: ""
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout
         - ruby/load-cache
         - ruby/install-deps
-        - run:
-            name: setup database
-            command: bundle exec rake db:create db:migrate
-            environment:
-              RAILS_ENV: test
-        - run:
-            name: run tests
-            command: bundle exec rake test
-            environment:
-              RAILS_ENV: test
+        # - run:
+        #     name: setup database
+        #     command: bundle exec rake db:create db:migrate
+        # - run:
+        #     name: run tests
+        #     command: bundle exec rake test
         - ruby/save-cache
 
   workflows:
