@@ -3,26 +3,31 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
-    jobs:
-      test:
-        docker:
-          - image: circleci/ruby:2.6.5-stretch
-          - image: postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
-          - image: redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
-        steps:
-          - checkout
-          - ruby/load-cache
-          - ruby/install-deps
-          - run:
-              name: setup database
-              command: bundle exec rake db:create db:migrate
-              environment:
-                RAILS_ENV: test
-                DATABASE_URL: postgis:///vets-api-test
-          - run:
-              name: run tests
-              command: bundle exec rake test
-              environment:
-                RAILS_ENV: test
-                DATABASE_URL: postgis:///vets-api-test
-          - ruby/save-cache
+  jobs:
+    test:
+      docker:
+        - image: circleci/ruby:2.6.5-stretch
+        - image: postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
+        - image: redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
+      steps:
+        - checkout
+        - ruby/load-cache
+        - ruby/install-deps
+        - run:
+            name: setup database
+            command: bundle exec rake db:create db:migrate
+            environment:
+              RAILS_ENV: test
+              DATABASE_URL: postgis:///vets-api-test
+        - run:
+            name: run tests
+            command: bundle exec rake test
+            environment:
+              RAILS_ENV: test
+              DATABASE_URL: postgis:///vets-api-test
+        - ruby/save-cache
+
+  workflows:
+    workflow:
+      jobs:
+        - test
