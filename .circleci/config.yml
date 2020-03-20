@@ -3,10 +3,6 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
-
-    environment:
-
-
   jobs:
     test:
       docker:
@@ -15,15 +11,7 @@
             BUNDLE_JOBS: 2
             BUNDLE_RETRY: 3
             BUNDLE_PATH: vendor/bundle
-            DATABASE_URL: "postgis://root@localhost/vets-api-test"
-            PGHOST: 127.0.0.1
-            PGUSER: vsp
-            PGPASSWORD: sekrit
         - image: circleci/postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
-          environment:
-            POSTGRES_USER: vsp
-            POSTGRES_PASSWORD: sekrit
-            POSTGRES_DB: vets-api-test
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout
