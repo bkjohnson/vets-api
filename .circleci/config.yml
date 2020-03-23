@@ -28,9 +28,7 @@
         - run:
             name: setup database
             command: bundle exec rake db:create db:schema:load
-        - run:
-            name: run tests
-            command: CI=true bundle exec rake ci
+        - ruby/run-tests
 
   workflows:
     workflow:
