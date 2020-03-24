@@ -29,11 +29,13 @@
         - ruby/install-deps
         - ruby/save-cache
         - run:
+            command: sudo apt install pdftk poppler-utils
+        - run:
             name: setup database
             command: bundle exec rake db:create db:schema:load
         - run:
             name: run tests
-            command: CI=true bundle exec rake ci
+            command: bundle exec rake ci
 
   workflows:
     workflow:

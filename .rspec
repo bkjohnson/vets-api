@@ -1,7 +1,7 @@
 --color
 --require spec_helper
 --format progress
-<% if ENV['CI'] %>
+<% if ENV['CI'] || ENV['CIRCLECI'] %>
 --format RspecJunitFormatter
 --out log/rspec.xml
 <% end %>

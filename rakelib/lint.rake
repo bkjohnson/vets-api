@@ -9,7 +9,7 @@ task lint: :environment do
 
   opts = '-r rubocop-thread_safety '
 
-  opts += if ENV['CI']
+  opts += if ENV['CI'] || ENV['CIRCLECI']
             "-r rubocop/formatter/junit_formatter.rb \
             --format RuboCop::Formatter::JUnitFormatter --out log/rubocop.xml \
             --format clang \
