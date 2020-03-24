@@ -42,10 +42,9 @@ Rails.application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
-  
-  config.rails_semantic_logger.add_file_appender = false
 
   # Speed up specs by not writing logs during RSpec runs
+  config.rails_semantic_logger.add_file_appender = false
   unless ENV.fetch('RAILS_ENABLE_TEST_LOG', false)
     config.logger = Logger.new(nil)
     config.log_level = :fatal
