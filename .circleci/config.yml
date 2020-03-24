@@ -14,6 +14,9 @@
             PGHOST: localhost
             PGUSER: vets-api
             RAILS_ENV: test
+            "Settings.saml.cert_path": "spec/support/certificates/ruby-saml.crt"
+            "Settings.saml.key_path": "spec/support/certificates/ruby-saml.key"
+            "Settings.binaries.clamdscan": "clamscan"
         - image: circleci/postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
           environment:
             POSTGRES_USER: vets-api
