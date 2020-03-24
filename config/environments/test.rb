@@ -16,7 +16,7 @@ Rails.application.configure do
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
   # preloads Rails for running tests, you may have to set it to true.
-  config.eager_load = ENV['CI'].present?
+  config.eager_load = false # ENV['CI'].present?
 
   # Configure static file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
@@ -44,7 +44,6 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   # Speed up specs by not writing logs during RSpec runs
-  config.rails_semantic_logger.add_file_appender = false
   unless ENV.fetch('RAILS_ENABLE_TEST_LOG', false)
     config.logger = Logger.new(nil)
     config.log_level = :fatal
