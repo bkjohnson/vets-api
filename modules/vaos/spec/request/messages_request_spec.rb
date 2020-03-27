@@ -37,7 +37,7 @@ RSpec.describe 'vaos appointment request messages', type: :request do
         end
       end
 
-      it 'has access and returns messages', :skip_mvi do
+      it 'has access and returns messages', :skip_mvi, focus: true do
         VCR.use_cassette('vaos/messages/get_messages', match_requests_on: %i[method uri]) do
           get "/v0/vaos/appointment_requests/#{request_id}/messages"
 
@@ -80,7 +80,7 @@ RSpec.describe 'vaos appointment request messages', type: :request do
       end
 
       context 'with access and valid message' do
-        it 'posts a message', :skip_mvi do
+        it 'posts a message', :skip_mvi, focus: true do
           VCR.use_cassette('vaos/messages/post_message', match_requests_on: %i[method uri]) do
             post "/v0/vaos/appointment_requests/#{request_id}/messages", params: request_body
 
