@@ -40,14 +40,19 @@
             command: bundle exec bundle-audit check --update
         - run:
             name: Static security analysis using Brakeman
-            command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 --format=plain
+            command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text 
         - run:
             name: Lint code with Rubocop
-            command: bundle exec rubocop -r rubocop-thread_safety -r rubocop/formatter/junit_formatter.rb  --format RuboCop::Formatter::JUnitFormatter --out log/rubocop.xml --format clang
+            command: bundle exec rubocop -r rubocop-thread_safety --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
         - run:
             name: Run all RSpec specs
-            command: bundle exec rspec
-
+            command: bundle exec rspec --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html 
+        - store_test_results:
+            path: ./rspec
+        - store_artifacts:
+            path: ./ci
+        - store_artifacts:
+            path: ./coverage
   workflows:
     workflow:
       jobs:
