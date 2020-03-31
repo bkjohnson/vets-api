@@ -35,8 +35,17 @@
             name: setup database
             command: bundle exec rake db:create db:schema:load
         - run:
-            name: run tests
-            command: bundle exec rake ci
+            name: Audit bundled gems for CVE issues
+            command: bundle exec bundle-audit check --update
+        - run:
+            name: Static security analysis using Brakeman
+            command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 --format=plain
+        - run:
+            name: Lint code with Rubocop
+            command: bundle exec rubocop -r rubocop-thread_safety
+        - run:
+            name: Run all RSpec specs
+            command: bundle exec rspec
 
   workflows:
     workflow:
