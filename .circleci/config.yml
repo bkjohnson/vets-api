@@ -30,9 +30,10 @@
         - ruby/install-deps
         - ruby/save-cache
         - run:
+            name: Install dependencies (pdftk, poppler)
             command: sudo apt install pdftk poppler-utils
         - run:
-            name: setup database
+            name: Setup test database
             command: bundle exec rake db:create db:schema:load
         - run:
             name: Audit bundled gems for CVE issues
@@ -42,7 +43,7 @@
             command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 --format=plain
         - run:
             name: Lint code with Rubocop
-            command: bundle exec rubocop -r rubocop-thread_safety
+            command: bundle exec rubocop -r rubocop-thread_safety -r rubocop/formatter/junit_formatter.rb  --format RuboCop::Formatter::JUnitFormatter --out log/rubocop.xml --format clang
         - run:
             name: Run all RSpec specs
             command: bundle exec rspec
