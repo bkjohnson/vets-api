@@ -3,7 +3,7 @@
 module VAOS
   class MessagesController < VAOS::BaseController
     def index
-      render json: MessagesSerializer.new(messages[:data], meta: messages[:meta])
+      render json: VAOS::MessagesSerializer.new(messages[:data], meta: messages[:meta])
     end
 
     def create
